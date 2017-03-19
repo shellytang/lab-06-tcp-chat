@@ -14,6 +14,7 @@
 * gitignore
 * eslint
 * package.json
+* include any npm scripts for starting server, linting, testing, etc
 * readme
  * Write a paragraph about your project
  * Write docs on how to get the project running
