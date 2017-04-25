@@ -15,7 +15,4 @@ telnet 192.168.1.9 3000
 # Chat commands
 * `@all <message>` triggers a broadcast event. e.g., `@all hello!`
 * `@nick <new nickname>` should allow a user change their nickname. e.g., `@nick shelly`
-* `@dm <user nickname> <message>` should allow a user to send a message directly to another user by nickname. e.g., `@dm shelly how are you?`
-
-# License
-MIT
+* `@dm <user nickname> <message>` should allow a user to send a message directly to another user by nickname. e.g., `@dm shelly how are you?` sends a direct message to user shelly.
