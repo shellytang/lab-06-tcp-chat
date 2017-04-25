@@ -18,15 +18,24 @@ ee.on('@all', (client, string) => {
 });
 
 ee.on('@nick', (client, string) => {
+  //grab current nickName and assigning to variable of old name before changing
+  let oldNickName = client.nickName;
   client.nickName = string;
-  pool.forEach(c => c.socket.write(`${client.nickName}: changed nickname\n`));
+  pool.forEach(c => c.socket.write(`${oldNickName} changed nickname to: ${client.nickName}\n`));
 });
 // ee.on('error', (err) => {
 //   console.error('whoops! there was an error');
 // });
-
-
-// 192.168.1.9
+ee.on('@dm', (client, string) => {
+  // client.nickName = string;
+  let dmNickName = string.split(' ').shift().trim();
+  let dmMessage = string.split(' ').slice(1).join(' ');
+  pool.forEach(function(c) {
+    if(dmNickName === c.nickName) {
+      c.socket.write(`${client.nickName}: ${dmMessage}`);
+    }
+  });
+});
 
 server.on('connection', function(socket) {
 
@@ -64,15 +73,25 @@ server.on('connection', function(socket) {
       return;
     }
 
-    
+    if(command.startsWith('@dm')) {
+      console.log(data.toString().split(' ').slice(1).join(' '));
+      ee.emit(command, client, data.toString().split(' ').slice(1).join(' '));
+      return;
+    }
 
     ee.emit('default', client, data.toString());
   });
-
-// error event handler
-  // socket.on('error', function(error){
-  //   throw error;
-  // });
+//close event to remove from client pool
+  socket.on('close', () => {
+    pool.splice(pool.indexOf(client),1);
+    let leftUser = client.nickName;
+    console.log(leftUser + ' has left the chat');
+    return;
+  });
+//how do you replicate this?
+  socket.on('error', (err) => {
+    console.error('There was an error!', err);
+  });
 
 });
 
