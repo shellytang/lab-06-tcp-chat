@@ -1,7 +1,6 @@
 'use strict';
 
 const expect = require('chai').expect;
-const net = require('net');
 const EE = require('events').EventEmitter;
 const ee = new EE();
 const Client = require('../model/client');
