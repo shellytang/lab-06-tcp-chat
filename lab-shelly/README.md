@@ -11,7 +11,7 @@
 # Directions
 * enter directions here...
 ```
-npm i -S uuid
+npm i -S node-uuid
 ```
 # Wack commands `'\'`
 * `\all` should trigger a broadcast event
